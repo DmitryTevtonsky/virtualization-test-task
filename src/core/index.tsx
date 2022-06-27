@@ -3,10 +3,15 @@ import React, { FC } from 'react';
 
 import Main from 'features/main';
 
+import { Spinner } from './components';
 import css from './index.module.css';
 
 const Core: FC = () => {
   const { data, loading, error } = useData();
+
+  if (loading) return <Spinner />;
+
+  if (error) return <div>error</div>;
 
   return (
     <section className={css.layout}>

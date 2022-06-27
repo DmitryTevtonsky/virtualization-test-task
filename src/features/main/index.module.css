@@ -1,37 +1,54 @@
-.list {
+.virtualizationHolder {
     height: 100%;
-    padding: 1rem;
+}
+
+.scroller {
     overflow: auto;
 }
 
+.list {
+    height: 100%;
+    /* padding: 1rem; */
+    overflow: auto;
+    position: relative;
+}
+
 .item {
+    width: 100%;
     display: flex;
     flex-direction: row;
-    padding: 1rem 0;
-    border-bottom: 1px solid whitesmoke;
+    align-items: center;
+    border: 1px solid whitesmoke;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: absolute;
+    padding: 0.5rem;
 }
 
 .itemImage {
     min-width: 10rem;
     max-width: 10rem;
     height: 10rem;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     background-color: whitesmoke;
     text-align: center;
     margin-right: 1rem;
+    display: flex;
 }
 
 .itemInfo {
-    width: 60%;
     width: 100%;
-    padding: 0.5rem 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .itemHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 
 .itemTitle {
