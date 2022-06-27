@@ -14,7 +14,11 @@ export const generateFakeData = (pointsCount = 10000) => {
   const data = [];
   for (let i = 0; i < pointsCount; ++i) {
     data.push({
-      value: i,
+      id: i,
+      name: i,
+      date_local: i,
+      upcoming: true,
+      details: '',
     });
   }
   return data;
