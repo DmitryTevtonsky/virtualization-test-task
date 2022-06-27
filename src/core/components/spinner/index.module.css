@@ -1,0 +1,26 @@
+.spinnerHolder {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.spinner {
+    font-size: 5rem;
+    color: blue;
+    animation: color-rotate 3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes color-rotate {
+    from {
+        filter: hue-rotate(0deg)
+    }
+    to {
+        filter: hue-rotate(360deg)
+    }
+}
