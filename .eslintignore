@@ -1,7 +1,0 @@
-dist
-public
-node_modules
-tests
-jest.config.js
-webpack.config.js
-tsconfig.json
