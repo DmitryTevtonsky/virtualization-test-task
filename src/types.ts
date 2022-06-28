@@ -1,7 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type Data = Record<string, any>[];
-
-export type Point = {
-  date: string;
-  value: number;
+export type Launch = {
+  id: string | number;
+  name: string;
+  date_local: string;
+  upcoming: boolean;
+  details: string;
+  links: {
+    patch: {
+      small: string;
+      large: string;
+    };
+  };
 };
