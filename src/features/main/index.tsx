@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import { ItemRendererProps } from 'core/components/v-list';
 import { Launch } from 'types';
@@ -6,6 +6,8 @@ import { VList } from 'core/components';
 
 import { LaunchInfo } from './components';
 import css from './index.module.css';
+
+import throttle from 'lodash.throttle';
 
 interface MainProps {
   loading: boolean;
@@ -18,9 +20,26 @@ const Main: FC<MainProps> = ({ data }: MainProps) => {
 
   const [viewportHeight, setViewportHeight] = useState<number>(0);
 
+  const throttledSetViewportHeight = useCallback(
+    throttle((height: number) => {
+      setViewportHeight(height);
+    }, 200),
+    []
+  );
+
   useEffect(() => {
-    setViewportHeight(virtualizationHolderElement.current?.clientHeight || 0);
-  }, []);
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const { contentRect } of entries) {
+        throttledSetViewportHeight(contentRect.height || 0);
+      }
+    });
+
+    virtualizationHolderElement.current && resizeObserver.observe(virtualizationHolderElement.current);
+
+    return () => {
+      resizeObserver && resizeObserver.disconnect();
+    };
+  }, [throttledSetViewportHeight]);
 
   const itemRenderer = ({ itemData }: ItemRendererProps) => {
     return <LaunchInfo launch={itemData} />;
@@ -33,7 +52,7 @@ const Main: FC<MainProps> = ({ data }: MainProps) => {
    */
   return (
     <div className={css.virtualizationHolder} ref={virtualizationHolderElement}>
-      {viewportHeight && (
+      {!!viewportHeight && (
         <VList data={data} height={viewportHeight} itemsBuffered={5} itemHeight={200} itemRenderer={itemRenderer} />
       )}
     </div>

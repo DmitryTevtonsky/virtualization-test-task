@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { FC, useMemo, useRef, useState } from 'react';
+import React, { FC, memo, useMemo, useRef, useState } from 'react';
 import throttle from 'lodash.throttle';
 
 import css from './index.module.css';
@@ -64,4 +64,4 @@ const VList: FC<VirtListProps> = ({ height, itemHeight, itemsBuffered = 3, data,
   );
 };
 
-export default VList;
+export default memo(VList);
