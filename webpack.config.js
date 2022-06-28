@@ -16,6 +16,7 @@ module.exports = function (env, { mode }) {
       },
     },
     output: {
+      path: path.resolve(__dirname, 'root'),
       publicPath: '/',
       filename: path.join('js', `bundle${mode === "production" ? ".[fullhash]" : ""}.js`),
       chunkFilename: path.join('js', 'chunks', '[name].[contenthash].js'),
