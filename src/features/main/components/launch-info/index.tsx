@@ -3,14 +3,13 @@ import React, { FC, memo } from 'react';
 import css from './index.module.css';
 
 import { Launch } from 'types';
-
 interface LaunchInfoProps {
   launch: Launch;
 }
 
 const LaunchInfo: FC<LaunchInfoProps> = ({ launch }) => {
   return (
-    <>
+    <div className={css.itemLayout}>
       <img
         loading="lazy"
         alt={`Mission patch "${launch.name}"`}
@@ -24,7 +23,7 @@ const LaunchInfo: FC<LaunchInfoProps> = ({ launch }) => {
         </div>
         <div className={css.itemDescription}>{launch.upcoming ? 'Upcoming' : launch.details}</div>
       </div>
-    </>
+    </div>
   );
 };
 

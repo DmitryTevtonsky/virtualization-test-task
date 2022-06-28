@@ -1,7 +1,8 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 
+import { ItemRendererProps } from 'core/components/v-list';
 import { Launch } from 'types';
-import VirtList from 'core/components/virt-list';
+import { VList } from 'core/components';
 
 import { LaunchInfo } from './components';
 import css from './index.module.css';
@@ -21,9 +22,9 @@ const Main: FC<MainProps> = ({ data }: MainProps) => {
     setViewportHeight(virtualizationHolderElement.current?.clientHeight || 0);
   }, []);
 
-  const renderItemContent = useCallback((item: Launch) => {
-    return <LaunchInfo launch={item} />;
-  }, []);
+  const itemRenderer = ({ itemData }: ItemRendererProps) => {
+    return <LaunchInfo launch={itemData} />;
+  };
 
   /**
    * I'm decided to get height of v-list holder
@@ -33,13 +34,7 @@ const Main: FC<MainProps> = ({ data }: MainProps) => {
   return (
     <div className={css.virtualizationHolder} ref={virtualizationHolderElement}>
       {viewportHeight && (
-        <VirtList
-          data={data}
-          height={viewportHeight}
-          itemsBuffered={5}
-          itemHeight={200}
-          renderItem={renderItemContent}
-        />
+        <VList data={data} height={viewportHeight} itemsBuffered={5} itemHeight={200} itemRenderer={itemRenderer} />
       )}
     </div>
   );

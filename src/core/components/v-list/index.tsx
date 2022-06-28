@@ -4,21 +4,25 @@ import throttle from 'lodash.throttle';
 
 import css from './index.module.css';
 
+export interface ItemRendererProps {
+  itemData: any;
+}
+
 interface VirtListProps {
   data: any[];
   height: number;
   itemHeight: number;
   itemsBuffered?: number;
-  renderItem: (item: any) => React.ReactNode;
+  itemRenderer: (props: ItemRendererProps) => React.ReactNode;
 }
 
 /**
- * I often use libraries for virtualization like a "react-virtualized"
+ * I often use libraries for virtualization like a "react-virtualized".
  * But it's my first time of implementation custom virtualization!
  * It was excited!)
  * Also there some ways to upgrade this component: height per item, placeholders for items.
  */
-const VirtList: FC<VirtListProps> = ({ height, itemHeight, itemsBuffered = 3, data, renderItem }: VirtListProps) => {
+const VList: FC<VirtListProps> = ({ height, itemHeight, itemsBuffered = 3, data, itemRenderer }: VirtListProps) => {
   const scrollerElement = useRef<HTMLDivElement>(null);
 
   const [scrollTop, setScrollTop] = useState<number>(0);
@@ -50,9 +54,9 @@ const VirtList: FC<VirtListProps> = ({ height, itemHeight, itemsBuffered = 3, da
   return (
     <div onScroll={update} ref={scrollerElement} className={css.scroller} style={{ height: height }}>
       <ul className={css.list} style={{ height: itemsCount * itemHeight }}>
-        {[...dataWithIndexes].slice(indexStart, indexEnd + 1).map((item) => (
+        {dataWithIndexes.slice(indexStart, indexEnd + 1).map((item) => (
           <li key={item.topOffset} className={css.item} style={{ top: item.topOffset, height: itemHeight }}>
-            {renderItem(item)}
+            {itemRenderer({ itemData: item })}
           </li>
         ))}
       </ul>
@@ -60,4 +64,4 @@ const VirtList: FC<VirtListProps> = ({ height, itemHeight, itemsBuffered = 3, da
   );
 };
 
-export default VirtList;
+export default VList;
